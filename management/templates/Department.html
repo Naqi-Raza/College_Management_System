@@ -1,0 +1,377 @@
+{% load static %}
+<!--   Font Awesome Icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<!-- Custom CSS -->
+<link rel="stylesheet" href="{% static 'department.css' %}">
+
+
+<!-- Page Header -->
+<div class="page-header text-black">
+    <h1><i class="fas fa-university"></i> Department Management</h1>
+    <p>Manage and oversee all college departments efficiently</p>
+    <a href="{% url 'Admission_form' %}">Addmission</a>
+</div>
+
+<!-- Department Container -->
+<div class="department-container ">
+    <div class="row  gx-0">
+        <!-- Student Management Department -->
+        <div class="col-lg-4 col-md-4 col-sm-12">
+            <div class="department-card" data-department="student">
+                <div class="department-icon bg-student">
+                    <i class="fas fa-user-graduate"></i>
+                </div>
+                <h3>Student Management</h3>
+                <p>Manage student admissions, records, attendance, grades, and academic progress. Handle student
+                    information, enrollment, and performance tracking.</p>
+
+
+                <div class="department-actions">
+                    <button class="btn-action btn-primary-custom" onclick="viewDepartment('student')">
+                        <i class="fas fa-eye"></i> View Details
+                    </button>
+                    <button class="btn-action btn-secondary-custom" onclick="manageDepartment('student')">
+                        <i class="fas fa-cog"></i> Manage
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Teaching Staff Management -->
+        <div class="col-lg-4 col-md-4 col-sm-12">
+            <div class="department-card" data-department="teaching">
+                <div class="department-icon bg-teaching">
+                    <i class="fas fa-chalkboard-teacher"></i>
+                </div>
+                <h3>Teaching Staff Management</h3>
+                <p>Oversee faculty members, teaching schedules, course assignments, and professional development.
+                    Manage teacher evaluations and training programs.</p>
+
+                <div class="department-actions">
+                    <button class="btn-action btn-primary-custom" onclick="viewDepartment('teaching')">
+                        <i class="fas fa-eye"></i> View Details
+                    </button>
+                    <button class="btn-action btn-secondary-custom" onclick="manageDepartment('teaching')">
+                        <i class="fas fa-cog"></i> Manage
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Non-Teaching Staff Management -->
+        <div class="col-lg-4 col-md-4 col-sm-12">
+            <div class="department-card" data-department="nonteaching">
+                <div class="department-icon bg-nonteaching ">
+                    <i class="fas fa-users-cog"></i>
+                </div>
+                <h3>Non-Teaching Staff Management</h3>
+                <p>Manage administrative staff and other non-teaching
+                    employees. Handle HR operations and staff coordination.</p>
+
+                <div class="department-actions">
+                    <button class="btn-action btn-primary-custom" onclick="viewDepartment('nonteaching')">
+                        <i class="fas fa-eye"></i> View Details
+                    </button>
+                    <button class="btn-action btn-secondary-custom" onclick="manageDepartment('nonteaching')">
+                        <i class="fas fa-cog"></i> Manage
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Administration Department -->
+        <div class="col-lg-4 col-md-4 col-sm-12">
+            <div class="department-card" data-department="admin">
+                <div class="department-icon bg-admin">
+                    <i class="fas fa-building"></i>
+                </div>
+                <h3>Administration Department</h3>
+                <p>Handle administrative operations, policy implementation, budget management, and institutional
+                    governance. Coordinate college-wide activities and planning.</p>
+                <div class="department-stats">
+                    <div class="stat-item">
+                        <div class="stat-number">25</div>
+                        <div class="stat-label">Administrators</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">15</div>
+                        <div class="stat-label">Active Projects</div>
+                    </div>
+                </div>
+                <div class="department-actions">
+                    <button class="btn-action btn-primary-custom" onclick="viewDepartment('admin')">
+                        <i class="fas fa-eye"></i> View Details
+                    </button>
+                    <button class="btn-action btn-secondary-custom" onclick="manageDepartment('admin')">
+                        <i class="fas fa-cog"></i> Manage
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Library Management -->
+        <div class="col-lg-4 col-md-4 col-sm-12">
+            <div class="department-card" data-department="library">
+                <div class="department-icon bg-library">
+                    <i class="fas fa-book"></i>
+                </div>
+                <h3>Library Management</h3>
+                <p>Manage library resources, book inventory, digital resources, and student borrowing records.
+                    Oversee library staff and facility operations.</p>
+                <div class="department-stats">
+                    <div class="stat-item">
+                        <div class="stat-number">15,000+</div>
+                        <div class="stat-label">Books</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">8</div>
+                        <div class="stat-label">Staff Members</div>
+                    </div>
+                </div>
+                <div class="department-actions">
+                    <button class="btn-action btn-primary-custom" onclick="viewDepartment('library')">
+                        <i class="fas fa-eye"></i> View Details
+                    </button>
+                    <button class="btn-action btn-secondary-custom" onclick="manageDepartment('library')">
+                        <i class="fas fa-cog"></i> Manage
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sports & Activities -->
+        <div class="col-lg-4 col-md-4 col-sm-12">
+            <div class="department-card" data-department="sports">
+                <div class="department-icon bg-sports">
+                    <i class="fas fa-running"></i>
+                </div>
+                <h3>Sports & Activities</h3>
+                <p>Organize sports events, extracurricular activities, competitions, and student wellness programs.
+                    Manage sports facilities and equipment.</p>
+                <div class="department-stats">
+                    <div class="stat-item">
+                        <div class="stat-number">20+</div>
+                        <div class="stat-label">Sports</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">450</div>
+                        <div class="stat-label">Participants</div>
+                    </div>
+                </div>
+                <div class="department-actions">
+                    <button class="btn-action btn-primary-custom" onclick="viewDepartment('sports')">
+                        <i class="fas fa-eye"></i> View Details
+                    </button>
+                    <button class="btn-action btn-secondary-custom" onclick="manageDepartment('sports')">
+                        <i class="fas fa-cog"></i> Manage
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Hostel Management -->
+        <div class="col-lg-4 col-md-4 col-sm-12">
+            <div class="department-card" data-department="hostel">
+                <div class="department-icon bg-hostel">
+                    <i class="fas fa-hotel"></i>
+                </div>
+                <h3>Hostel Management</h3>
+                <p>Oversee hostel accommodations, room allocations, student welfare, mess facilities, and hostel
+                    security. Manage hostel staff and maintenance.</p>
+                <div class="department-stats">
+                    <div class="stat-item">
+                        <div class="stat-number">650</div>
+                        <div class="stat-label">Residents</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">4</div>
+                        <div class="stat-label">Hostels</div>
+                    </div>
+                </div>
+                <div class="department-actions">
+                    <button class="btn-action btn-primary-custom" onclick="viewDepartment('hostel')">
+                        <i class="fas fa-eye"></i> View Details
+                    </button>
+                    <button class="btn-action btn-secondary-custom" onclick="manageDepartment('hostel')">
+                        <i class="fas fa-cog"></i> Manage
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Transport Management -->
+        <div class="col-lg-4 col-md-4 col-sm-12">
+            <div class="department-card" data-department="transport">
+                <div class="department-icon bg-transport">
+                    <i class="fas fa-bus"></i>
+                </div>
+                <h3>Transport Management</h3>
+                <p>Manage college transportation services, bus routes, vehicle maintenance, and driver coordination.
+                    Ensure safe and efficient student transportation.</p>
+                <div class="department-stats">
+                    <div class="stat-item">
+                        <div class="stat-number">18</div>
+                        <div class="stat-label">Buses</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">25</div>
+                        <div class="stat-label">Routes</div>
+                    </div>
+                </div>
+                <div class="department-actions">
+                    <button class="btn-action btn-primary-custom" onclick="viewDepartment('transport')">
+                        <i class="fas fa-eye"></i> View Details
+                    </button>
+                    <button class="btn-action btn-secondary-custom" onclick="manageDepartment('transport')">
+                        <i class="fas fa-cog"></i> Manage
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap JS Bundle -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Custom JavaScript -->
+<script>
+    // View Department Details
+    function viewDepartment(departmentName) {
+        // Add smooth scale animation
+        const card = document.querySelector(`[data-department="${departmentName}"]`);
+        card.style.transform = 'scale(0.95)';
+        setTimeout(() => {
+            card.style.transform = 'scale(1)';
+        }, 200);
+        if (departmentName == "student") {
+            window.location.href = "{% url 'show_department' %}";
+        }
+        else if (departmentName == "teaching") {
+            window.location.href = "{% url 'teaching_detail' %}";
+        }
+        else if (departmentName == "nonteaching") {
+            window.location.href = "{% url 'show_department' %}";
+        }
+        else if (departmentName == "admin") {
+            window.location.href = "{% url 'show_department' %}";
+        }
+        else if (departmentName == "library") {
+            window.location.href = "{% url 'show_department' %}";
+        }
+        else if (departmentName == "transport") {
+            window.location.href = "{% url 'show_department' %}";
+        }
+        // Show alert with department info (replace with actual navigation)
+        // console.log(`Viewing ${departmentName} department details`);
+        // In a real application, you would navigate to the department details page
+        // window.location.href = `/department/${depatmentName}/details/`;
+    }
+
+    // Manage Department
+    function manageDepartment(departmentName) {
+        // Add smooth scale animation
+        const card = document.querySelector(`[data-department="${departmentName}"]`);
+        card.style.transform = 'scale(0.95)';
+        setTimeout(() => {
+            card.style.transform = 'scale(1)';
+        }, 200);
+
+        // Show alert with management options (replace with actual navigation)
+        console.log(`Managing ${departmentName} department`);
+        alert(`Opening ${departmentName.charAt(0).toUpperCase() + departmentName.slice(1)} Department Management Panel...`);
+
+        // In a real application, you would navigate to the department management page
+        // window.location.href = `/department/${departmentName}/manage/`;
+    }
+
+    // Add dynamic card interactions
+    document.addEventListener('DOMContentLoaded', function () {
+        const cards = document.querySelectorAll('.department-card');
+
+        // Add click ripple effect
+        cards.forEach(card => {
+            card.addEventListener('click', function (e) {
+                // Only apply ripple if not clicking on buttons
+                if (!e.target.classList.contains('btn-action') && !e.target.closest('.btn-action')) {
+                    const ripple = document.createElement('div');
+                    ripple.style.position = 'absolute';
+                    ripple.style.borderRadius = '50%';
+                    ripple.style.background = 'rgba(102, 126, 234, 0.3)';
+                    ripple.style.width = '20px';
+                    ripple.style.height = '20px';
+                    ripple.style.left = e.offsetX + 'px';
+                    ripple.style.top = e.offsetY + 'px';
+                    ripple.style.transform = 'translate(-50%, -50%)';
+                    ripple.style.animation = 'ripple 0.6s ease-out';
+                    ripple.style.pointerEvents = 'none';
+
+                    this.appendChild(ripple);
+
+                    setTimeout(() => {
+                        ripple.remove();
+                    }, 600);
+                }
+            });
+        });
+
+        // Add scroll animation observer
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, {
+            threshold: 0.1
+        });
+
+        cards.forEach(card => {
+            observer.observe(card);
+        });
+
+        // Add search functionality (optional enhancement)
+        const searchInput = document.getElementById('departmentSearch');
+        if (searchInput) {
+            searchInput.addEventListener('input', function (e) {
+                const searchTerm = e.target.value.toLowerCase();
+                cards.forEach(card => {
+                    const departmentName = card.querySelector('h3').textContent.toLowerCase();
+                    const description = card.querySelector('p').textContent.toLowerCase();
+
+                    if (departmentName.includes(searchTerm) || description.includes(searchTerm)) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        }
+    });
+
+    // Add ripple animation CSS dynamically
+    const style = document.createElement('style');
+    style.textContent = `
+            @keyframes ripple {
+                from {
+                    width: 20px;
+                    height: 20px;
+                    opacity: 1;
+                }
+                to {
+                    width: 200px;
+                    height: 200px;
+                    opacity: 0;
+                }
+            }
+        `;
+    document.head.appendChild(style);
+
+    // Log page load event
+    console.log('Department Management Page Loaded Successfully');
+    console.log('Total Departments:', document.querySelectorAll('.department-card').length);
+</script>
+</body>

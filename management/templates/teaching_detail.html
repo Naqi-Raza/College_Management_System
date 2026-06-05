@@ -1,0 +1,682 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Faculty Directory - College System</title>
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <style>
+        :root {
+            --primary-grad: linear-gradient(135deg, #4dd0e1 0%, #26c6da 100%);
+            --secondary-grad: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --bg-grad: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
+            --card-bg: rgba(255, 255, 255, 0.05);
+            --card-border: rgba(255, 255, 255, 0.1);
+            --glass-blur: blur(20px);
+            --text-muted: rgba(255, 255, 255, 0.7);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--bg-grad);
+            min-height: 100vh;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        /* Navbar Integration */
+        .custom-navbar {
+            background: rgba(15, 32, 39, 0.85);
+            backdrop-filter: var(--glass-blur);
+            border-bottom: 1px solid var(--card-border);
+            padding: 1rem 0;
+        }
+
+        .navbar-brand {
+            font-weight: 800;
+            color: #fff !important;
+            font-size: 1.6rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+
+        .navbar-brand i {
+            color: #4dd0e1;
+        }
+
+        .back-btn {
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            border: 1px solid var(--card-border);
+            border-radius: 50px;
+            padding: 0.5rem 1.2rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .back-btn:hover {
+            background: var(--primary-grad);
+            color: #0f2027;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(77, 208, 225, 0.4);
+        }
+
+        /* Container & Layout */
+        .main-container {
+            max-width: 1400px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2.5rem;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+        }
+
+        .page-title h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .page-title p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            margin-bottom: 0;
+        }
+
+        .btn-add-teacher {
+            background: var(--primary-grad);
+            color: #0f2027;
+            border: none;
+            border-radius: 50px;
+            padding: 0.8rem 2rem;
+            font-weight: 700;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 5px 20px rgba(77, 208, 225, 0.3);
+        }
+
+        .btn-add-teacher:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 8px 25px rgba(77, 208, 225, 0.5);
+            color: #0f2027;
+        }
+
+        /* Search & Filter Section */
+        .search-filter-section {
+            background: var(--card-bg);
+            backdrop-filter: var(--glass-blur);
+            border: 1px solid var(--card-border);
+            border-radius: 25px;
+            padding: 1.5rem 2rem;
+            margin-bottom: 2.5rem;
+
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .search-box {
+            position: relative;
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .search-box i {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            font-size: 1.1rem;
+        }
+
+        .search-box input {
+            width: 100%;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--card-border);
+            border-radius: 50px;
+            padding: 0.8rem 1rem 0.8rem 3.2rem;
+            color: #fff;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .search-box input:focus {
+            outline: none;
+            border-color: #4dd0e1;
+            box-shadow: 0 0 12px rgba(77, 208, 225, 0.3);
+            background: rgba(0, 0, 0, 0.4);
+        }
+
+        .filter-badges {
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+            margin-top: 10px;
+            padding: 5px 0;
+            flex-wrap: wrap;
+        }
+
+        .badge-filter {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--card-border);
+            color: var(--text-muted);
+            border-radius: 50px;
+            padding: 0.6rem 1.4rem;
+            font-size: 0.9rem;
+            font-weight: 500;
+            white-space: nowrap;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .badge-filter.active,
+        .badge-filter:hover {
+            background: var(--primary-grad);
+            color: #0f2027;
+            border-color: transparent;
+            font-weight: 600;
+            box-shadow: 0 4px 12px rgba(77, 208, 225, 0.2);
+        }
+
+        /* Teacher Simple Written List (Single Line) */
+        .teacher-simple-line {
+            padding: 12px 10px;
+            font-size: 1.05rem;
+            color: #ffffff;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+            background: none !important;
+        }
+
+        .teacher-simple-line:hover {
+            color: #4dd0e1;
+            padding-left: 15px;
+        }
+
+        .teacher-name-link {
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: #ffffff;
+            transition: all 0.2s ease;
+        }
+
+        .teacher-simple-line:hover .teacher-name-link {
+            color: #4dd0e1;
+            text-decoration: underline;
+        }
+
+        .separator {
+            color: rgba(255, 255, 255, 0.2);
+            font-weight: 300;
+        }
+
+        .teacher-detail-text {
+            color: rgba(255, 255, 255, 0.7);
+            transition: all 0.2s ease;
+        }
+
+        .teacher-simple-line:hover .teacher-detail-text {
+            color: rgba(77, 208, 225, 0.8);
+        }
+
+        /* Modal styling */
+        .modal-content {
+            background: #172a35;
+            border: 1px solid var(--card-border);
+            border-radius: 25px;
+            color: #fff;
+            backdrop-filter: var(--glass-blur);
+        }
+
+        .modal-header {
+            border-bottom: 1px solid var(--card-border);
+            padding: 1.5rem;
+        }
+
+        .modal-title {
+            font-weight: 700;
+            font-size: 1.4rem;
+        }
+
+        .modal-header .btn-close {
+            filter: invert(1);
+        }
+
+        .modal-body {
+            padding: 1.5rem;
+        }
+
+        .form-label {
+            font-weight: 500;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-muted);
+        }
+
+        .form-control,
+        .form-select {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            color: #fff;
+            padding: 0.7rem 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus,
+        .form-select:focus {
+            background: rgba(0, 0, 0, 0.4);
+            border-color: #4dd0e1;
+            box-shadow: 0 0 8px rgba(77, 208, 225, 0.3);
+            color: #fff;
+        }
+
+        .modal-footer {
+            border-top: 1px solid var(--card-border);
+            padding: 1.5rem;
+        }
+
+        .btn-modal-primary {
+            background: var(--primary-grad);
+            border: none;
+            border-radius: 50px;
+            padding: 0.6rem 1.8rem;
+            font-weight: 700;
+            color: #0f2027;
+            transition: all 0.3s ease;
+        }
+
+        .btn-modal-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(77, 208, 225, 0.4);
+        }
+
+        .btn-modal-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--card-border);
+            border-radius: 50px;
+            padding: 0.6rem 1.8rem;
+            color: #fff;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-modal-secondary:hover {
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animated-fade-in {
+            animation: fadeIn 0.5s ease-out forwards;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg custom-navbar">
+        <div class="container main-container m-0 mx-auto py-0">
+            <a class="navbar-brand" href="{% url 'home' %}">
+                <i class="fas fa-graduation-cap"></i> College System
+            </a>
+            <div class="ms-auto">
+                <a href="{% url 'show_department' %}" class="back-btn">
+                    <i class="fas fa-arrow-left"></i> Back to Programs
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="main-container">
+
+        <!-- Page Header -->
+        <div class="page-header">
+            <div class="page-title">
+                <h1>Teaching Faculty </h1>
+                <p>Manage and oversee all teaching staff, scheduled lectures, and classrooms.</p>
+            </div>
+            <div>
+                <button class="btn-add-teacher" data-bs-toggle="modal" data-bs-target="#addTeacherModal">
+                    <i class="fas fa-user-plus"></i> Add New Teacher
+                </button>
+            </div>
+        </div>
+
+        <!-- Search and Filter Bar -->
+        <div class="search-filter-section">
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" id="teacherSearchInput"
+                    placeholder="Search faculty by name, title, department, or courses...">
+            </div>
+            <div class="filter-badges" id="deptFiltersContainer">
+                <div class="badge-filter active" onclick="filterByDept('all')">All Faculty</div>
+                <div class="badge-filter" onclick="filterByDept('Computer Science')">Computer Science</div>
+                <div class="badge-filter" onclick="filterByDept('Mathematics')">Mathematics</div>
+                <div class="badge-filter" onclick="filterByDept('Physics')">Physics</div>
+                <div class="badge-filter" onclick="filterByDept('Chemistry')">Chemistry</div>
+                <div class="badge-filter" onclick="filterByDept('English')">English</div>
+            </div>
+
+            <!-- Department search context target display -->
+            <div class="w-100 mt-2 pt-2" style="border-top: 1px solid rgba(255,255,255,0.08);">
+                <i class="fas fa-university text-info me-2"></i>
+                <span id="searchTargetDept"
+                    style="font-size: 1rem; color: #4dd0e1; font-weight: 700; margin-left: 5px;"></span>
+            </div>
+        </div>
+
+        <!-- Directory Simple Written List (Single Line) -->
+        <div class="animated-fade-in mb-5" style="background: none; border: none; padding: 0;">
+            <div id="teacherListContainer" style="display: flex; flex-direction: column; gap: 0;">
+                <!-- Populated dynamically via JS -->
+            </div>
+            <div class="text-center py-5 text-muted d-none" id="emptyState">
+                <i class="fas fa-user-slash fs-3 mb-2 text-info" style="opacity: 0.5;"></i>
+                <p>No faculty members found</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL: Add New Teacher -->
+    <div class="modal fade" id="addTeacherModal" tabindex="-1" aria-labelledby="addTeacherModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addTeacherModalLabel"><i class="fas fa-user-plus text-info me-2"></i>Add
+                        New Teacher</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form id="addTeacherForm" onsubmit="handleCreateTeacher(event)">
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="newTeacherName" class="form-label">Full Name</label>
+                            <input type="text" class="form-control" id="newTeacherName" required
+                                placeholder="e.g. Dr. Sarah Jenkins">
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="newTeacherDept" class="form-label">Department</label>
+                                <select class="form-select" id="newTeacherDept" required>
+                                    <option value="Computer Science">Computer Science</option>
+                                    <option value="Mathematics">Mathematics</option>
+                                    <option value="Physics">Physics</option>
+                                    <option value="Chemistry">Chemistry</option>
+                                    <option value="English">English</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="newTeacherDesignation" class="form-label">Designation</label>
+                                <input type="text" class="form-control" id="newTeacherDesignation" required
+                                    placeholder="e.g. Associate Professor">
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="newTeacherEmail" class="form-label">Email Address</label>
+                            <input type="email" class="form-control" id="newTeacherEmail" required
+                                placeholder="e.g. sarah.j@college.edu">
+                        </div>
+                        <div class="mb-3">
+                            <label for="newTeacherPhone" class="form-label">Phone Number</label>
+                            <input type="text" class="form-control" id="newTeacherPhone" required
+                                placeholder="e.g. +92 300 1234567">
+                        </div>
+                        <div class="mb-3">
+                            <label for="newTeacherBio" class="form-label">Short Biography</label>
+                            <textarea class="form-control" id="newTeacherBio" rows="3"
+                                placeholder="Brief description of experience, field of interest, research, etc."></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-modal-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-modal-primary">Create Profile</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap 5 Bundle JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- App Logic Script -->
+    <script>
+        // Seed Database default values
+        const DEFAULT_TEACHERS = [
+            {
+                id: 1,
+                name: "Dr. John Doe",
+                designation: "Senior Professor & Department Head",
+                department: "Computer Science",
+                email: "john.doe@college.edu",
+                phone: "+92 300 8765432",
+                bio: "Over 15 years of academic experience teaching systems architecture, database management, and introduction to artificial intelligence. Ph.D. in Computer Science from MIT.",
+                schedule: [
+                    { id: 101, className: "Introduction to programming (ICS-I)", time: "Mon, Wed: 9:00 AM - 10:30 AM", room: "Lab 3" },
+                    { id: 102, className: "Database Systems (ICS-II)", time: "Tue, Thu: 11:00 AM - 12:30 PM", room: "Room 102" }
+                ]
+            },
+            {
+                id: 2,
+                name: "Dr. Sarah Smith",
+                designation: "Associate Professor",
+                department: "Physics",
+                email: "sarah.smith@college.edu",
+                phone: "+92 333 5554321",
+                bio: "Enthusiastic lecturer focusing on quantum mechanics and thermodynamics. Passionate about research and encouraging student participation in laboratory sciences.",
+                schedule: [
+                    { id: 201, className: "Applied Physics (FSc Eng)", time: "Mon, Fri: 10:30 AM - 12:00 PM", room: "Physics Lab" },
+                    { id: 202, className: "Electromagnetism (General Sci)", time: "Tue, Thu: 01:00 PM - 02:30 PM", room: "Room 205" }
+                ]
+            },
+            {
+                id: 3,
+                name: "Prof. Alex Jones",
+                designation: "Senior Lecturer",
+                department: "Mathematics",
+                email: "alex.jones@college.edu",
+                phone: "+92 321 9998877",
+                bio: "Teaches calculus, linear algebra, and discrete mathematical structures. Dedicated to helping students build strong problem-solving skills for academic success.",
+                schedule: [
+                    { id: 301, className: "Calculus I (FSc Eng)", time: "Mon, Wed, Fri: 08:00 AM - 09:00 AM", room: "Room 301" }
+                ]
+            }
+        ];
+
+        let teachers = [];
+        let currentFilterDept = "all";
+
+        const teacherListContainer = document.getElementById("teacherListContainer");
+        const emptyState = document.getElementById("emptyState");
+        const searchInput = document.getElementById("teacherSearchInput");
+
+        // Initialization
+        document.addEventListener("DOMContentLoaded", () => {
+            // Load from LocalStorage or initialize defaults
+            const stored = localStorage.getItem("college_teachers_db");
+            if (stored) {
+                teachers = JSON.parse(stored);
+            } else {
+                teachers = DEFAULT_TEACHERS;
+                saveToLocalStorage();
+            }
+
+            renderTeacherList();
+
+            // Set up search filter event listener
+            searchInput.addEventListener("input", () => {
+                renderTeacherList();
+            });
+        });
+
+        function saveToLocalStorage() {
+            localStorage.setItem("college_teachers_db", JSON.stringify(teachers));
+        }
+
+        // Render Teachers in a single line
+        function renderTeacherList() {
+            const query = searchInput.value.toLowerCase().trim();
+            teacherListContainer.innerHTML = "";
+
+            const filteredTeachers = teachers.filter(t => {
+                // Match search query
+                const matchesQuery = t.name.toLowerCase().includes(query) ||
+                    t.department.toLowerCase().includes(query) ||
+                    t.designation.toLowerCase().includes(query) ||
+                    (t.schedule && t.schedule.some(s => s.className.toLowerCase().includes(query)));
+
+                // Match department filter
+                const matchesDept = currentFilterDept === "all" || t.department === currentFilterDept;
+
+                return matchesQuery && matchesDept;
+            });
+
+            // Update the search target department text below the search bar
+            const targetDeptTextElement = document.getElementById("searchTargetDept");
+            let contextText = currentFilterDept === "all" ? "All Faculty / All Departments" : `Department of ${currentFilterDept}`;
+            if (query) {
+                contextText += ` (Filtered by: "${query}")`;
+            }
+            targetDeptTextElement.innerText = contextText;
+
+            if (filteredTeachers.length === 0) {
+                emptyState.classList.remove("d-none");
+                return;
+            }
+
+            emptyState.classList.add("d-none");
+
+            filteredTeachers.forEach((t, index) => {
+                const totalClasses = t.schedule ? t.schedule.length : 0;
+
+                const lineDiv = document.createElement("div");
+                lineDiv.className = "teacher-simple-line animated-fade-in";
+                lineDiv.style.animationDelay = `${index * 0.02}s`;
+                lineDiv.onclick = () => goToProfile(t.id);
+
+                lineDiv.innerHTML = `
+                    <span class="teacher-name-link"style="font-size: 1.5rem">${t.name}</span>
+                    <span class="separator">|</span>
+                    <span class="teacher-detail-text">${t.designation}</span>
+                    <span class="separator">|</span>
+                    <span class="teacher-detail-text">Department: ${t.department}</span>
+                    <span class="separator">|</span>
+                    <span class="teacher-detail-text">${totalClasses} class${totalClasses !== 1 ? 'es' : ''} scheduled</span>
+                `;
+                teacherListContainer.appendChild(lineDiv);
+            });
+        }
+
+        function filterByDept(deptName) {
+            currentFilterDept = deptName;
+
+            // Highlight active filter badge
+            const badges = document.querySelectorAll("#deptFiltersContainer .badge-filter");
+            badges.forEach(b => {
+                if (b.innerText.toLowerCase() === deptName.toLowerCase() ||
+                    (deptName === "all" && b.innerText.includes("All"))) {
+                    b.classList.add("active");
+                } else {
+                    b.classList.remove("active");
+                }
+            });
+
+            renderTeacherList();
+        }
+
+        function goToProfile(id) {
+            window.location.href = `{% url 'teacher_profile' %}?id=${id}`;
+        }
+
+        // Add Teacher action
+        function handleCreateTeacher(e) {
+            e.preventDefault();
+
+            const name = document.getElementById("newTeacherName").value;
+            const dept = document.getElementById("newTeacherDept").value;
+            const designation = document.getElementById("newTeacherDesignation").value;
+            const email = document.getElementById("newTeacherEmail").value;
+            const phone = document.getElementById("newTeacherPhone").value;
+            const bio = document.getElementById("newTeacherBio").value;
+
+            const newTeacher = {
+                id: Date.now(), // Unique simple ID
+                name: name,
+                designation: designation,
+                department: dept,
+                email: email,
+                phone: phone,
+                bio: bio,
+                schedule: []
+            };
+
+            teachers.push(newTeacher);
+            saveToLocalStorage();
+
+            // Reset form and close modal
+            document.getElementById("addTeacherForm").reset();
+            const modal = bootstrap.Modal.getInstance(document.getElementById("addTeacherModal"));
+            modal.hide();
+
+            // Render updated table and redirect directly to profile page
+            renderTeacherTable();
+            window.location.href = `{% url 'teacher_profile' %}?id=${newTeacher.id}`;
+        }
+    </script>
+</body>
+
+</html>

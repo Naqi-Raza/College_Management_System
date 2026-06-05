@@ -1,0 +1,269 @@
+{% extends 'show_depart_data.html' %}
+{% load static %}
+{% block content %}
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Student Record</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            padding: 20px;
+        }
+
+        .update-container {
+            width: 100%;
+            margin: 0 auto;
+            background-color: white;
+            border: 2px solid black;
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: black;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid black;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+
+        label {
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: black;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        input[type="date"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        input[type="text"]:focus,
+        input[type="number"]:focus,
+        input[type="date"]:focus,
+        select:focus,
+        textarea:focus {
+            border-color: black;
+            outline: none;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .checkbox-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 10px;
+            margin-top: 8px;
+        }
+
+        .checkbox-group label {
+            font-weight: normal;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            margin-bottom: 0;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+
+        /* Readonly styles for previous fields */
+        input[readonly] {
+            background-color: #f9f9f9;
+            color: #666;
+            border-color: #eee;
+        }
+
+        .btn-update {
+            background-color: black;
+            color: white;
+            border: none;
+            padding: 15px 20px;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 20px;
+            transition: background-color 0.3s;
+        }
+
+        .btn-update:hover {
+            background-color: #333;
+        }
+
+        @media (max-width: 600px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="update-container">
+        <h1>Update Student Record</h1>
+        <form action="{% url 'update_student' main_data.0.id %}" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <div class="form-grid">
+                <!-- Personal Information -->
+                <div class="form-group">
+                    <label for="id_first_name">First Name</label>
+                    <input type="text" id="id_first_name" name="first_name" value="{{  main_data.0.child.First_name }}"
+                        readonly>
+                </div>
+
+                <div class="form-group">
+                    <label for="id_last_name">Last Name</label>
+                    <input type="text" id="id_last_name" name="last_name" value="{{ main_data.0.child.Last_name }}"
+                        readonly>
+                </div>
+
+                <div class="form-group">
+                    <label for="id_father_name">Father Name</label>
+                    <input type="text" id="id_father_name" name="father_name"
+                        value="{{ main_data.0.child.Father_name }}" readonly>
+                </div>
+
+                <div class="form-group">
+                    <label for="id_cell_no">Cell No</label>
+                    <input type="text" id="id_cell_no" name="cell_no" value="{{ main_data.0.child.cell_no }}"
+                        placeholder="Enter cellphone number" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="id_student_cnic">Student CNIC</label>
+                    <input type="text" id="id_student_cnic" name="student_cnic"
+                        value="{{ main_data.0.child.Student_cnic }}" readonly>
+                </div>
+
+                <div class="form-group">
+                    <label for="id_father_cnic">Father CNIC</label>
+                    <input type="text" id="id_father_cnic" name="father_cnic"
+                        value="{{ main_data.0.child.Father_cnic }}" readonly>
+                </div>
+
+                <div class="form-group full-width">
+                    <label for="id_address">Address</label>
+                    <textarea id="id_address" name="address" rows="3"
+                        readonly>{{ main_data.0.child.Address }}</textarea>
+                </div>
+
+                <!-- Academic Info -->
+                <div class="form-group">
+                    <label for="id_previous_qualification">Previous Qualification</label>
+                    <input type="text" id="id_previous_qualification" name="previous_qualification"
+                        value="{{ main_data.0.child.Previous_Qualification }}" readonly>
+                </div>
+
+                <div class="form-group">
+                    <label for="id_previous_institute">Previous Institute</label>
+                    <input type="text" id="id_previous_institute" name="previous_institute"
+                        value="{{ main_data.0.child.previous_institute }}" readonly>
+                </div>
+
+                <div class="form-group">
+                    <label for="id_total_marks">Total Marks</label>
+                    <input type="number" id="id_total_marks" name="total_marks"
+                        value="{{ main_data.0.child.Total_marks }}" readonly>
+                </div>
+
+                <div class="form-group">
+                    <label for="id_obtained_marks">Obtained Marks</label>
+                    <input type="number" id="id_obtained_marks" name="obtained_marks"
+                        value="{{ main_data.0.child.Obtained_marks }}" readonly>
+                </div>
+
+                <div class="form-group">
+                    <label for="id_percentage">Percentage</label>
+                    <input type="text" id="id_percentage" name="percentage" value="{{ main_data.0.child.Percentage }}"
+                        readonly>
+                </div>
+
+                <div class="form-group">
+                    <label for="id_selected_program">Selected Program</label>
+                    <input type="text" id="id_selected_program" name="selected_program"
+                        value="{{ main_data.0.child.selected_program }}" readonly>
+                </div>
+
+                <div class="form-group">
+                    <label for="id_date">Date of Registration</label>
+                    <input type="text" id="id_date" name="date" value="{{ main_data.0.child.date }}" readonly>
+                </div>
+
+                <!-- New Fields -->
+                <div class="form-group">
+                    <label for="id_roll_no">Roll No (New / Update)</label>
+                    <input type="text" id="id_roll_no" name="roll_no" value="{{ main_data.0.auth.user_id }}"
+                        placeholder="Assign New Roll No" required>
+                </div>
+                <div class="form-group">
+                    <label for="id_image">Image</label>
+                    <input type="file" id="id_image" name="image" value="{{ main_data.0.image }}">
+                    <p>Current Image: {{ main_data.0.image }}</p>
+                </div>
+
+                <div class="form-group full-width">
+                    <label>Subjects (Select Multiple)</label>
+                    <div class="checkbox-group">
+                        <label><input type="checkbox" name="subjects" value="Physics"> Physics</label>
+                        <label><input type="checkbox" name="subjects" value="Chemistry"> Chemistry</label>
+                        <label><input type="checkbox" name="subjects" value="Mathematics"> Mathematics</label>
+                        <label><input type="checkbox" name="subjects" value="Biology"> Biology</label>
+                        <label><input type="checkbox" name="subjects" value="English"> English</label>
+                        <label><input type="checkbox" name="subjects" value="Urdu"> Urdu</label>
+                        <label><input type="checkbox" name="subjects" value="Computer Science"> Computer Science</label>
+                        <label><input type="checkbox" name="subjects" value="Islamiyat"> Islamiyat</label>
+                        <label><input type="checkbox" name="subjects" value="Pak Studies"> Pak Studies</label>
+                        <label><input type="checkbox" name="subjects" value="Ethics"> Ethics</label>
+                        <label><input type="checkbox" name="subjects" value="Statistics"> Statistics</label>
+                        <label><input type="checkbox" name="subjects" value="Islamiyat"> ___</label>
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit" class="btn-update">Update Record</button>
+        </form>
+    </div>
+    <script>
+
+    </script>
+</body>
+{% endblock %}

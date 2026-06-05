@@ -1,0 +1,225 @@
+{% extends 'show_depart_data.html' %}
+{% load static %}
+{% block content %}
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FSc Engineering Students</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: white;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            color: black;
+            margin-bottom: 30px;
+            padding: 20px;
+            border-bottom: 3px solid black;
+        }
+
+        .table-container {
+            overflow-x: auto;
+            background-color: white;
+            border: 2px solid black;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: white;
+        }
+
+        thead {
+            background-color: black;
+            color: white;
+        }
+
+        th {
+            padding: 15px;
+            text-align: left;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-right: 1px solid white;
+        }
+
+        th:last-child {
+            border-right: none;
+        }
+
+        tbody tr {
+            border-bottom: 1px solid black;
+            transition: background-color 0.3s ease;
+        }
+
+        tbody tr:hover {
+            background-color: #f0f0f0;
+        }
+
+        tbody tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        td {
+            padding: 12px 15px;
+            color: black;
+            border-right: 1px solid #ddd;
+        }
+
+        td:last-child {
+            border-right: none;
+        }
+
+        /* Responsive Design */
+        @media screen and (max-width: 768px) {
+            .table-container {
+                border: 0;
+            }
+
+            table {
+                border: 0;
+            }
+
+            table thead {
+                display: none;
+            }
+
+            table tr {
+                margin-bottom: 15px;
+                display: block;
+                border: 2px solid black;
+                border-radius: 5px;
+            }
+
+            table td {
+                display: block;
+                text-align: right;
+                border: none;
+                border-bottom: 1px solid #ddd;
+                padding: 10px;
+            }
+
+            table td:last-child {
+                border-bottom: 0;
+            }
+
+            table td::before {
+                content: attr(data-label);
+                float: left;
+                font-weight: bold;
+                text-transform: uppercase;
+                color: black;
+            }
+
+            tbody tr:hover {
+                background-color: #e0e0e0;
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            body {
+                padding: 10px;
+            }
+
+            h1 {
+                font-size: 1.5rem;
+                padding: 15px;
+            }
+
+            table td {
+                font-size: 0.9rem;
+            }
+        }
+
+        #yearWheel {
+            width: 30%;
+            border: none;
+            margin-bottom: 15px;
+            outline: none;
+            text-decoration: underline;
+            font-size: 18px;
+            margin-left: 70%;
+            text-align: right;
+        }
+
+        #editbtn {
+            background-color: red;
+            color: white;
+            border: none;
+            width: 100%;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>{{std_data.0.child.selected_program}} Students Record</h1>
+        <select id="yearWheel">
+            <option value="">Select Year</option>
+        </select>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Father Name</th>
+                        <th>Program</th>
+                        <th>Year</th>
+                        <th>Open</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for n in std_data %}
+                    <tr>
+                        <td data-label="ID">{{n.id}}</td>
+                        <td data-label="Name">{{n.child.First_name}} {{n.child.Last_name}}</td>
+                        <td data-label="Father Name">{{n.child.Father_name}}</td>
+                        <td data-label="Program">{{n.child.selected_program}}</td>
+                        <td data-label="Year">{{n.child.date}}</td>
+                        <td data-label="Open"><button id="editbtn"
+                                onclick="editStudent('{{n.child.selected_program}}', '{{n.id}}')">Edit</button></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        let wheel = document.getElementById("yearWheel");
+        let currentYear = new Date().getFullYear();
+
+        for (let i = currentYear; i >= 1950; i--) {
+            let option = document.createElement("option");
+            option.value = i;
+            option.text = i;
+            wheel.add(option);
+        }
+        function editStudent(program, id) {
+            window.location.href = "/edit_student/" + program + "/" + id;
+        }
+
+    </script>
+    {% endblock %}
+</body>
